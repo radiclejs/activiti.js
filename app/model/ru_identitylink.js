@@ -12,7 +12,10 @@ module.exports = app => {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    version: Sequelize.SMALLINT,
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 用户组id
     group_id: Sequelize.CHAR,
     // 用户组 类型

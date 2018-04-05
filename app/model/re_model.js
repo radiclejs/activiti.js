@@ -18,7 +18,10 @@ module.exports = app => {
     // 模型的关键字，流程引擎用到。比如：FTOA_SWGL
     key: Sequelize.CHAR,
     // 版本号
-    version: Sequelize.SMALLINT,
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 数据源信息, 以json格式保存流程定义的信息, 比如：{"name":"FTOA_SWGL","revision":1,"description":"丰台财政局OA，收文管理流程"}
     meta_info: Sequelize.TEXT,
     development_id: Sequelize.CHAR,

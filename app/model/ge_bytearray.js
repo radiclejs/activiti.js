@@ -14,7 +14,10 @@ module.exports = app => {
     // 部署的文件名称
     name: Sequelize.CHAR,
     // 版本号
-    version: Sequelize.SMALLINT,
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 部署的id, 来自于父表ACT_RE_DEPLOYMENT的主键
     development_id: Sequelize.CHAR,
     // 大文本类型，存储文本字节流

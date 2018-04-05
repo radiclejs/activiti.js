@@ -1,0 +1,104 @@
+.modeler {
+  width: 100%;
+  height: 100%;
+}
+
+:global {
+  .dropzone {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .content.with-diagram .dropzone {
+    display: none;
+  }
+
+  /* line 24, styles/app.less */
+  .content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  /* line 29, styles/app.less */
+  .dropzone > .message {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: table;
+    font-size: 16px;
+    color: #111;
+  }
+  /* line 38, styles/app.less */
+  .dropzone > .message .note {
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+  }
+  /* line 45, styles/app.less */
+  .dropzone > .message .error .details {
+    max-width: 500px;
+    font-size: 12px;
+    margin: 20px auto;
+    text-align: left;
+  }
+  /* line 52, styles/app.less */
+  .dropzone > .message .error pre {
+    border: solid 1px #ccc;
+    background: #eee;
+    padding: 10px;
+  }
+  /* line 59, styles/app.less */
+  .content:not(.with-error) .error,
+  .content.with-error .intro,
+  .content.with-diagram .intro {
+    display: none;
+  }
+  /* line 65, styles/app.less */
+  .content .canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  /* line 73, styles/app.less */
+  .content .canvas,
+  .content .properties-panel-parent {
+    display: none;
+  }
+  /* line 79, styles/app.less */
+  .content.with-diagram .canvas,
+  .content.with-diagram .properties-panel-parent {
+    display: block;
+  }
+  /* line 87, styles/app.less */
+  .buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 280px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  /* line 96, styles/app.less */
+  .buttons > li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  /* line 100, styles/app.less */
+  .buttons > li > a {
+    background: #ddd;
+    border: solid 1px #666;
+    display: inline-block;
+    padding: 5px;
+  }
+  /* line 108, styles/app.less */
+  .buttons a {
+    opacity: 0.3;
+  }
+  /* line 112, styles/app.less */
+  .buttons a.active {
+    opacity: 1;
+  }
+}

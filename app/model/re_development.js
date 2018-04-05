@@ -11,6 +11,10 @@ module.exports = app => {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 部署包的名称
     name: Sequelize.CHAR,
     // 类型

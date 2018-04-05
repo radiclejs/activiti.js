@@ -12,6 +12,10 @@ module.exports = app => {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 事件名称
     name: Sequelize.CHAR,
     // 事件类型

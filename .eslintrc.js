@@ -6,7 +6,7 @@
 
 module.exports = {
   "extends": [
-    "standard"
+    "eslint-config-egg"
   ],
   "parserOptions": {
     "ecmaVersion": 2017

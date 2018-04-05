@@ -79,3 +79,4 @@ server/run
 /demo/**/*.js
 /src/**/*.map
 /demo/**/*.map
+/run

@@ -12,7 +12,10 @@ module.exports = app => {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    version: Sequelize.SMALLINT,
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     type: Sequelize.CHAR,
     // 锁定释放时间
     lock_exp_time: Sequelize.TIME,

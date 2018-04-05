@@ -34,6 +34,7 @@ function buildFakeUserData(dataCount = 100) {
   fakeData.forEach(obj => {
     obj.mobile = '1' + obj.mobile.split('-').join('')
     obj.pwd = '123456'
+    obj.account = obj.email.split('@')[0]
   })
 
   return fakeData

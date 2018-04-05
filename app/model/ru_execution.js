@@ -12,7 +12,10 @@ module.exports = app => {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    version: Sequelize.SMALLINT,
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 业务主键ID
     business_key: Sequelize.CHAR(255),
     // 父节点实例ID

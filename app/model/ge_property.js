@@ -9,7 +9,10 @@ module.exports = app => {
     name: Sequelize.CHAR,
     value: Sequelize.TEXT,
     // 版本号
-    version: Sequelize.SMALLINT
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
   }, {
     timestamps: true,
     // freezeTableName: true

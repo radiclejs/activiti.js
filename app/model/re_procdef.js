@@ -25,7 +25,10 @@ module.exports = app => {
     // 流程编号（该编号就是流程文件process元素的id属性值）
     key: Sequelize.CHAR,
     // 流程版本号（由程序控制，新增即为1，修改后依次加1来完成的）
-    version: Sequelize.SMALLINT,
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 数据源信息, 以json格式保存流程定义的信息, 比如：{"name":"FTOA_SWGL","revision":1,"description":"丰台财政局OA，收文管理流程"}
     meta_info: Sequelize.TEXT,
     // 部署编号

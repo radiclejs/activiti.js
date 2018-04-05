@@ -12,7 +12,10 @@ module.exports = app => {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    version: Sequelize.SMALLINT,
+    version: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 1
+    },
     // 邮箱前缀
     email: Sequelize.STRING,
     account: Sequelize.CHAR,

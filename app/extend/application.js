@@ -6,26 +6,11 @@
  */
 'use strict';
 
-const jsonfile = require('jsonfile');
-const path = require('path');
-const _ = require('lodash');
 const dataHelper = require('../../data/data-helper');
 const constEnums = require('../../lib/const');
 
 module.exports = {
   ...constEnums,
-
-  get IS_DEV() {
-    return this.config.env === 'local' || this.config.env === 'unittest' || this.config.env === 'test'
-  },
-  /**
-   * 同步表结构到远程DB服务器(只创建一次, 从无到有)
-   */
-  async syncDBOnlyOnce() {
-    console.log('sync DB start')
-    await this.model.sync();
-    console.log('sync DB done');
-  },
 
   /**
    * 读取数据文件并且初始化数据到DB, 仅一次
@@ -47,18 +32,8 @@ module.exports = {
       throw new Error('已经初始化过数据了, 请检查')
     }
 
-    await IdUser.bulkCreate(dataHelper.buildFakeUserData(originUserData));
+    await IdUser.bulkCreate(originUserData);
 
     console.log('sync DB data end')
-  },
-
-  /**
-   * 警告: 创世, 删除所有数据, 重新造新数据, 一切初始化
-   * 仅能在本地环境使用
-   */
-  async TheCreation() {
-    await this.model.drop();
-    await this.syncDBOnlyOnce();
-    await this.syncDBDataOnlyOnce();
   }
 };

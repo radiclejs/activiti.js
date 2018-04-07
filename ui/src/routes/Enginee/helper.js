@@ -19,6 +19,16 @@ export async function loadXML() {
   return xml.data;
 }
 
+export async function loadDefinition() {
+  let xml = await request.get('http://127.0.0.1:7001/public/invoice.v2.bpmn');
+  const BpmnModdle = require('bpmn-moddle').default;
+  const moddle = new BpmnModdle();
+  let result = moddle.fromXML(xml.data, (err, data, context) => { window.data = {data, context}; console.log(data, context)})
+  return result
+}
+
+window.loadDefinition = loadDefinition
+
 export function $$(id) {
   return document.getElementById(id);
 }

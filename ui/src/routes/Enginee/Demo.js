@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Tooltip } from 'antd';
+import { Button, Row, Col, Card, Tooltip } from 'antd';
 import BpmnModdle from 'bpmn-moddle';
 
 import BpmnJS from 'bpmn-js';
@@ -8,6 +8,7 @@ import { loadXML, $$, createModeler, getEncodeData } from './helper';
 import Dropzone from 'react-dropzone';
 import _ from 'lodash';
 import styles from './Demo.less';
+import { repositoryDeploy } from '../../services/api'
 
 export default class Demo extends PureComponent {
   componentDidMount() {
@@ -26,6 +27,12 @@ export default class Demo extends PureComponent {
     this.modeler = null;
   }
 
+  deploy = async () => {
+    await repositoryDeploy({
+
+    })
+  }
+
   initModeler() {
     this.modeler = createModeler();
     this.exportArtifacts = _.debounce(this.exportArtifacts, 500);
@@ -42,6 +49,9 @@ export default class Demo extends PureComponent {
         error,
         containerClassName: error ? 'with-error' : 'with-diagram',
       });
+
+      let canvas = this.modeler.get('canvas')
+      canvas.addMarker('approveInvoice', 'highlight')
     });
   }
 
@@ -133,6 +143,9 @@ export default class Demo extends PureComponent {
       <Fragment>
         {/* <div id="demo" className={styles.demo}>
         </div> */}
+        <div>
+          <Button onClick={this.deploy} type="primary">部署</Button>
+        </div>
         {this.renderModeler()}
       </Fragment>
     );

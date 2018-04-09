@@ -5,7 +5,7 @@
 module.exports = app => {
   const Sequelize = app.Sequelize;
 
-  const ReDevelopment = app.model.define('re_development', {
+  const ReDeployment = app.model.define('re_depolyment', {
     id: {
       type: Sequelize.CHAR,
       primaryKey: true,
@@ -34,5 +34,5 @@ module.exports = app => {
     // freezeTableName: true
   });
 
-  return ReDevelopment;
+  return ReDeployment;
 };

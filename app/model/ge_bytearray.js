@@ -19,7 +19,7 @@ module.exports = app => {
       defaultValue: 1
     },
     // 部署的id, 来自于父表ACT_RE_DEPLOYMENT的主键
-    development_id: Sequelize.CHAR,
+    deployment_id: Sequelize.CHAR,
     // 大文本类型，存储文本字节流
     bytes: Sequelize.BLOB,
     // 是否引擎生成 0 为用户生成, 1为引擎生成

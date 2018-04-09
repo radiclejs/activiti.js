@@ -11,7 +11,7 @@ import './bpmn.third.less';
 import './bpmn_panel.third.less';
 
 export async function loadXML() {
-  let xml = await request.get('http://127.0.0.1:7001/public/invoice.v2.bpmn');
+  let xml = await request.get('http://127.0.0.1:7001/public/invoice.bpmn');
   // console.log(xml.data)
   // let viewer = new BpmnJS()
   // viewer.importXML(xml.data)
@@ -19,8 +19,8 @@ export async function loadXML() {
   return xml.data;
 }
 
-export async function loadDefinition() {
-  let xml = await request.get('http://127.0.0.1:7001/public/invoice.v2.bpmn');
+export async function loadDefinition(name = 'invoice') {
+  let xml = await request.get(`http://127.0.0.1:7001/public/${name}.bpmn`);
   const BpmnModdle = require('bpmn-moddle').default;
   const moddle = new BpmnModdle();
   let result = moddle.fromXML(xml.data, (err, data, context) => { window.data = {data, context}; console.log(data, context)})

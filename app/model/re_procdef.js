@@ -32,7 +32,7 @@ module.exports = app => {
     // 数据源信息, 以json格式保存流程定义的信息, 比如：{"name":"FTOA_SWGL","revision":1,"description":"丰台财政局OA，收文管理流程"}
     meta_info: Sequelize.TEXT,
     // 部署编号
-    development_id: Sequelize.CHAR,
+    deployment_id: Sequelize.CHAR,
     // 资源文件名称, 流程bpmn文件名称
     resource_name: Sequelize.TEXT,
     // 图片资源文件名称, png流程图片名称

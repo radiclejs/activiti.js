@@ -28,8 +28,12 @@ const menuData = [
     path: 'enginee',
     children: [
       {
-        name: 'demo页',
-        path: 'demo',
+        name: '流程设计',
+        path: 'design',
+      },
+      {
+        name: '流程管理',
+        path: 'process_manager',
       },
     ],
   },

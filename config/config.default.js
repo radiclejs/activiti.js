@@ -14,7 +14,12 @@
 
 module.exports = appInfo => {
 
-  const config = {};
+  const config = {
+    port: 3000,
+    clusterClient: {
+      workers: 1
+    },
+  };
 
   return config;
 };

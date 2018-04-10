@@ -27,4 +27,6 @@ app.router(require('./router').default);
 // 5. Start
 app.start('#root');
 
+localStorage.debug = 'engine:*';
+
 export default app._store; // eslint-disable-line

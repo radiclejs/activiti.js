@@ -46,7 +46,7 @@ class RepositoryService extends Service {
     }
   }
 
-  async deploy({id, name, source}) {
+  async deploy({id, name, desc, xml, svg}) {
     const { geBytearray, reDeployment, reProcdef, geProperty } = this.ctx.service
 
     // 找下有没生成好的流程部署的主键id
@@ -65,21 +65,49 @@ class RepositoryService extends Service {
 
     // 存放流程定义的属性信息，部署每个新的流程定义都会在这张表中增加一条记录。
     //  注意：当流程定义的key相同的情况下，使用的是版本升级
+    const version = await reProcdef.max('version', {
+      where: {
+        key: id
+      }
+    })
+
+    const newVersion = version ? (version + 1) : 1
+
+    const newId = `${id}:${newVersion}:${deployInfo.id}`
+
     const definitionInfo = await reProcdef.create({
-      // id: `${id}:${version}:${deployInfo.id}`,
+      id: newId,
       name,
       key: id,
-      deployment_id: deployInfo.id
+      deployment_id: deployInfo.id,
+      desc,
+      version: newVersion
     })
 
     // 存储流程定义相关的部署信息。即流程定义文档的存放地(例如bpmn定义文件和自动生成的流程图片)
-    const bytesInfo = await geBytearray.create({
-      name,
+
+    // 保存xml
+    const xmlInfo = await geBytearray.create({
+      name: name + '.bpmn',
       deployment_id: deployInfo.id,
-      bytes: Buffer.from('string', 'utf8')
+      bytes: Buffer.from(xml, 'utf8'),
+      generated: 0
     })
 
-    return bytesInfo
+    // 保存svg
+    const svgInfo = await geBytearray.create({
+      name: name + '.svg',
+      deployment_id: deployInfo.id,
+      bytes: Buffer.from(svg, 'utf8'),
+      // svg是自动生成的
+      generated: 1
+    })
+
+    return {
+      id,
+      name,
+      deployment_id: deployInfo.id
+    }
   }
 
   async echo() {

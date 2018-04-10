@@ -78,7 +78,7 @@ export async function queryNotices() {
   return request('/api/notices');
 }
 
-const PATH_PREFIX = 'http://127.0.0.1:7001/api'
+const PATH_PREFIX = 'http://127.0.0.1:7001/api/'
 
 export async function repositoryDeploy(params) {
   return request(PATH_PREFIX + 'repository/deploy', {

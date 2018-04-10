@@ -37,7 +37,7 @@ module.exports = app => {
     resource_name: Sequelize.TEXT,
     // 图片资源文件名称, png流程图片名称
     dgrm_resource_name: Sequelize.TEXT,
-    description: Sequelize.TEXT,
+    desc: Sequelize.TEXT,
     // start节点是否存在formKey 0否  1是
     has_start_form_key: Sequelize.BOOLEAN,
     // 是否有图形符号

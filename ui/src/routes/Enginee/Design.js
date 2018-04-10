@@ -4,13 +4,15 @@ import { Button, Row, Col, Card, Tooltip } from 'antd';
 import BpmnModdle from 'bpmn-moddle';
 
 import BpmnJS from 'bpmn-js';
-import { loadXML, $$, createModeler, getEncodeData } from './helper';
+import { renderDiagram, $$, createModeler, getEncodeData, saveXML, saveSVG, getProcessInfo } from './helper';
 import Dropzone from 'react-dropzone';
 import _ from 'lodash';
-import styles from './Demo.less';
+import styles from './Design.less';
 import { repositoryDeploy } from '../../services/api'
 
-export default class Demo extends PureComponent {
+const debug = require('debug')('engine:design')
+
+export default class Design extends PureComponent {
   componentDidMount() {
     this.initModeler();
   }
@@ -19,6 +21,7 @@ export default class Demo extends PureComponent {
     svg: {},
     xml: {},
     error: null,
+    hasDiagram: false,
     containerClassName: '',
   };
 
@@ -28,9 +31,15 @@ export default class Demo extends PureComponent {
   }
 
   deploy = async () => {
-    await repositoryDeploy({
+    let xml = await saveXML(this.modeler)
+    let svg = await saveSVG(this.modeler)
+    let procInfo = getProcessInfo(this.modeler._definitions)
+    const result = await repositoryDeploy(Object.assign(procInfo, {
+      xml,
+      svg
+    }))
 
-    })
+    debug('deploy result:', result)
   }
 
   initModeler() {
@@ -39,20 +48,19 @@ export default class Demo extends PureComponent {
     this.modeler.on('commandStack.changed', this.exportArtifacts);
   }
 
-  async openDiagram(xml) {
-    if (!xml) {
-      xml = await loadXML();
-    }
-
-    this.modeler.importXML(xml, error => {
+  async openDiagram(params) {
+    renderDiagram(params, this.modeler, (error) => {
       this.setState({
         error,
+        hasDiagram: !error,
         containerClassName: error ? 'with-error' : 'with-diagram',
       });
+    })
+  }
 
-      let canvas = this.modeler.get('canvas')
-      canvas.addMarker('approveInvoice', 'highlight')
-    });
+  highlight(id) {
+    let canvas = this.modeler.get('canvas')
+    canvas.addMarker(id, 'highlight')
   }
 
   createNewDiagram = e => {
@@ -66,33 +74,31 @@ export default class Demo extends PureComponent {
     let reader = new FileReader();
 
     reader.onload = e => {
-      this.openDiagram(e.target.result);
+      this.openDiagram({
+        source: e.target.result
+      });
     };
 
     reader.readAsText(file);
   };
 
   // 导出数据
-  exportArtifacts = () => {
-    this.modeler.saveSVG((err, svg) => {
-      if (!err) {
-        this.setState({
-          svg: getEncodeData('diagram.svg', svg),
-        });
-      }
-    });
+  exportArtifacts = async () => {
+    try {
+      let svg = await saveSVG(this.modeler)
+      let xml = await saveXML(this.modeler)
 
-    this.modeler.saveXML({ format: true }, (err, xml) => {
-      if (!err) {
-        this.setState({
-          xml: getEncodeData('diagram.bpmn', xml),
-        });
-      }
-    });
+      this.setState({
+        svg: getEncodeData('diagram.svg', svg),
+        xml: getEncodeData('diagram.bpmn', xml),
+      });
+    } catch(e) {
+      console.error(e)
+    }
   };
 
   renderModeler() {
-    const { svg, xml, error, containerClassName } = this.state;
+    const { error, containerClassName } = this.state;
 
     const classNames = 'content ' + containerClassName;
 
@@ -101,17 +107,17 @@ export default class Demo extends PureComponent {
         <Dropzone className="dropzone" onDrop={this.onDrop}>
           <div className="message intro">
             <div className="note">
-              Drop BPMN diagram from your desktop or{' '}
-              <a onClick={this.createNewDiagram}>create a new diagram</a> to get started.
+              从本地拖入已有流程(.bpmn文件){'  '}
+              <a onClick={this.createNewDiagram}>新建流程</a>
             </div>
           </div>
 
           <div className="message error">
             <div className="note">
-              <p>Ooops, we could not display the BPMN 2.0 diagram.</p>
+              <p>渲染图形失败  </p>
 
               <div className="details">
-                <span>cause of the problem</span>
+                <span>问题原因</span>
                 <pre>{error ? error.message : ''}</pre>
               </div>
             </div>
@@ -120,31 +126,18 @@ export default class Demo extends PureComponent {
 
         <div className="canvas" id="js-canvas" />
         <div className="properties-panel-parent" id="js-properties-panel" />
-
-        <ul className="buttons">
-          <li>下载</li>
-          <li>
-            <a title="download BPMN diagram" href={xml.href} download={xml.download}>
-              BPMN diagram
-            </a>
-          </li>
-          <li>
-            <a title="download as SVG image" href={svg.href} download={svg.download}>
-              SVG image
-            </a>
-          </li>
-        </ul>
       </div>
     );
   }
 
   render() {
+    const {svg, xml, hasDiagram} = this.state
     return (
       <Fragment>
-        {/* <div id="demo" className={styles.demo}>
-        </div> */}
         <div>
-          <Button onClick={this.deploy} type="primary">部署</Button>
+          {hasDiagram ?<Button onClick={this.deploy} type="primary">部署</Button> : null}
+          {hasDiagram ?<Button href={xml.href} download={xml.download}>保存为xml</Button> : null}
+          {hasDiagram ?<Button href={svg.href} download={svg.download}>保存为svg</Button> : null}
         </div>
         {this.renderModeler()}
       </Fragment>

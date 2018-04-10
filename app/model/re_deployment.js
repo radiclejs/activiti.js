@@ -5,7 +5,7 @@
 module.exports = app => {
   const Sequelize = app.Sequelize;
 
-  const ReDeployment = app.model.define('re_depolyment', {
+  const ReDeployment = app.model.define('re_deployment', {
     id: {
       type: Sequelize.CHAR,
       primaryKey: true,

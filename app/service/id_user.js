@@ -1,14 +1,8 @@
-/*
- * @Author: yuzhe.xing
- * @Date: 2018-01-18 11:46:02
- * @Last Modified by: yuzhe.xing
- * @Last Modified time: 2018-04-04 17:51:18
- */
 'use strict';
 
 const Service = require('egg-cooked').Service;
 
-class IdUser extends Service {
+class Id_userService extends Service {
   get MODEL() {
     return this.ctx.model.IdUser;
   }
@@ -22,4 +16,4 @@ class IdUser extends Service {
   }
 }
 
-module.exports = IdUser;
+module.exports = Id_userService;

@@ -23,6 +23,21 @@ const menuData = [
     ],
   },
   {
+    name: 'identity',
+    icon: 'user',
+    path: 'identity',
+    children: [
+      {
+        name: '用户管理',
+        path: 'user',
+      },
+      {
+        name: '群组管理',
+        path: 'group',
+      },
+    ],
+  },
+  {
     name: 'enginee',
     icon: 'dashboard',
     path: 'enginee',

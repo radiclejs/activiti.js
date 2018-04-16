@@ -2,7 +2,7 @@
  * @Author: yuzhe.xing
  * @Date: 2018-01-18 15:09:47
  * @Last Modified by: yuzhe.xing
- * @Last Modified time: 2018-04-04 17:25:04
+ * @Last Modified time: 2018-04-16 15:30:28
  */
 'use strict';
 
@@ -13,14 +13,15 @@ class IdUserController extends Controller {
     return this.ctx.service.idUser;
   }
 
-  async findByAccount() {
-    const account = this.checkInput({
-      // 用户邮箱字段
-      account: 'string'
-    }, ['account']).account;
-    const result = await this.SERVICE.findByAccount(account);
+  create() {
+    const body = this.checkBodyInput({
+      id: 'string',
+      email: 'string',
+      pwd: 'string',
+      nickname: 'string'
+    }, ['id', 'email', 'pwd', 'nickname'])
 
-    this.ctx.done(result);
+    super.create(body)
   }
 }
 

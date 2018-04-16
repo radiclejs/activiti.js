@@ -72,10 +72,16 @@ export const getRouterData = app => {
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
+    '/identity/user': {
+      component: dynamicWrapper(app, ['list'], () => import('../routes/Identity/User')),
+    },
+    '/identity/group': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Identity/Group')),
+    },
     '/enginee/design': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Enginee/Design')),
     },
-    '/enginee/process_manager': {
+    '/enginee/process-manager': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Enginee/ProcessManager')),
     },
     '/dashboard/analysis': {

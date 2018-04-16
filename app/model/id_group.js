@@ -6,24 +6,16 @@ const uuid = require('uuid');
 
 module.exports = app => {
   const Sequelize = app.Sequelize;
-  const IdUser = app.model.define('id_user', {
-    // 等于用户的邮箱前缀
+  const IdGroup = app.model.define('id_group', {
+    // 职务类型名称(例: manager/market/sales)
     id: {
       type: Sequelize.CHAR,
       primaryKey: true
     },
-    // 邮箱
-    email: Sequelize.STRING,
-    pwd: Sequelize.CHAR,
-    // 部门名称
-    department: Sequelize.STRING,
-    first: Sequelize.CHAR,
-    last: Sequelize.CHAR,
-    nickname: Sequelize.CHAR,
-    // 手机号
-    mobile: Sequelize.CHAR,
-    // 头像地址
-    avatar: Sequelize.CHAR,
+    // 职务类型名称中文(例: 经理/市场/销售)
+    name: Sequelize.CHAR,
+    // 引擎执行类型(例: assignment/security)
+    type: Sequelize.CHAR,
     // 是否可用
     enable: {
       allowNull: false,
@@ -35,5 +27,5 @@ module.exports = app => {
     // freezeTableName: true
   });
 
-  return IdUser;
+  return IdGroup;
 };
